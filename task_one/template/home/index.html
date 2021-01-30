@@ -1,0 +1,91 @@
+{% extends 'base_template.html' %}
+{% load static %}
+{% block content %}
+
+
+<div class="container">
+  <div class="row">
+<div class="col-md-1"></div>
+    <div class="col-sm-10">
+ {% if messages %}
+    {% for message in messages %}
+        
+<div class="alert alert-success alert-dismissible">
+                      <a href="#" class="close" data-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+                      <strong>{{message}}</strong> 
+                    </div>
+      
+    {% endfor %}
+    {% endif %}
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default text-left">
+            <div class="panel-body">
+              <p contenteditable="true">Task Ont to Create Update View & Soft Delete</p>
+              <a href="{% url 'home:CreateProduct' %}"><button type="button" class="btn btn-default btn-sm">Add Blogs
+              </button></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="row">
+       
+        <div class="col-sm-12">
+          <div class="well">
+            <table id="example" class="display table table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+          {% if object_list %}
+           {% for item in object_list %}
+
+
+                <tr>
+           
+                  <td align="left" valign="top">{{forloop.counter}}</td>
+                 <td align="center" valign="top">
+                  {% if item.ProducImage %}
+                  <img src='{{item.ProducImage.url}}' style="width:17px;">
+                    {% endif %}
+                </td>
+                  <td align="left" valign="top">{{item.ProductName}}</td>
+                  <td align="left" valign="top">${{item.Price}}</td>
+                  <td align="left" valign="top">{{item.Stock}}</td>
+                 
+                  
+                  <td align="left" valign="top">
+                   <a href="{% url 'home:update_product' item.id %}"><button type="button" class="btn btn-primary btn-sm">Edit</button></a>
+              <button type="button" class="btn btn-danger btn-sm remove_data" data-remove_url="{% url 'home:product_delete' item.id %}">Delete</button>
+                </td>
+            </tr>
+            {% endfor %}
+           {% endif %}
+       
+          </tr>
+        </tbody>
+      </table>
+          </div>
+        </div>
+      </div>
+      
+     
+    </div>
+    
+
+  </div>
+</div>
+
+
+{% endblock %}
